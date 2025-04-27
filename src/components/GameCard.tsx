@@ -1,43 +1,42 @@
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-interface Game {
+type Game = {
   id: number;
   title: string;
   image: string;
   players: string;
   genre: string;
-}
+};
 
-interface GameCardProps {
+type GameCardProps = {
   game: Game;
-}
+};
 
 export const GameCard = ({ game }: GameCardProps) => {
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
-      <div className="aspect-video relative overflow-hidden">
-        <img 
-          src={game.image} 
-          alt={game.title} 
-          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-        />
-      </div>
-      <CardContent className="p-5">
-        <h3 className="text-xl font-bold mb-2">{game.title}</h3>
-        <div className="flex gap-4 text-sm text-gray-600 mb-3">
-          <span>{game.genre}</span>
-          <span>•</span>
-          <span>{game.players} игроков</span>
+    <Link to={`/games/${game.id}`} className="group">
+      <div className="bg-white rounded-xl overflow-hidden shadow-md transition transform hover:scale-105 hover:shadow-lg">
+        <div className="relative h-48">
+          <img 
+            src={game.image} 
+            alt={game.title} 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute top-3 right-3 bg-purple-600 text-white text-xs px-2 py-1 rounded-full">
+            {game.genre}
+          </div>
         </div>
-      </CardContent>
-      <CardFooter className="bg-gray-50 p-5">
-        <Button asChild className="w-full bg-purple-600 hover:bg-purple-700">
-          <Link to={`/games/${game.id}`}>Играть</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+        
+        <div className="p-4">
+          <h3 className="font-bold text-lg mb-1 group-hover:text-purple-600 transition">{game.title}</h3>
+          <p className="text-gray-600 text-sm">Игроков: {game.players}</p>
+          
+          <div className="mt-4 text-purple-600 text-sm font-medium">
+            Подробнее
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
